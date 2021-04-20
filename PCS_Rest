@@ -1,0 +1,89 @@
+GET /api/patient/1 -returns information about a specific patiient with ID 1
+Returns: Patient JSON single object (from table 'patient')
+Errors:
+    Patient does not exist
+    User is not  authorized
+
+GET /api/patient/1/issue - displays patients previous Omaha System entries
+Returns: Issue objects linked to displayed patient
+Errors:
+    User is not authorized
+
+PUT api/patient/1/issue - creates new object issue for patient with ID 1
+Expects: Issue JSON single object (based on table 'issue')
+Errors:
+    Invalid data provided
+    Issue with given ID already exists
+    User not authorized to insert patient
+This would run query: 
+    INSERT INTO Issue(issueID, patientID, ...)
+    VALUES (1, 1, ...)
+
+GET /api/omaha-system/domain - Displays the four Domains
+Returns: domain JSON list
+Errors:
+    User is not authorized
+
+PUT api/patient/1/issue/1/domain - Enters the Domain for Patient 1 Issue 1
+Expects: Domain JSON single object (based on table 'Domain')
+Errors:
+    Domain object does not exist
+    Patient object does not exist
+    User is not authorized
+This would run query:
+    INSERT INTO Issue (DomainID) WHERE IssueID = '1'
+    VALUES ('1')
+    
+
+GET api/omaha-system/domain/1/problem - Gets the problem entities associated with the given domain 1
+Returns: problem JSON list (based on table 'Problem')
+Errors:
+    User is not authorized
+    Domain does not exists
+This would run query:
+    SELECT Problem WITH DomainID "1"
+
+
+PUT api/patient/1/issue/1/problem - Enters the Problem for Patient 1 Issue 1
+Expects: Problem JSON single object (based on table 'Problem')
+Errors:
+    Problem object does not exist
+    Patient does not exist
+    User is not authorized
+This would run query:
+    INSERT INTO Issue (ProblemID) WHERE IssueID = '1'
+    VALUES ('1')
+
+GET api/omaha-system/modifier - Gets the modifiers
+Returns: modifiers JSON list (based on table 'modifier')
+Errors:
+    User is not authorized
+This would run query:
+    SELECT Modifier
+
+PUT api/patient/1/issue/1/modifier - Enters the modifier for Patient 1 Issue 1
+Expects: Modifier JSON single object (based on table 'modifier')
+Errors:
+    Patient does not exist
+    User is not authorized
+    Issue does not exist
+This would run query:
+    INSERT INTO Issue (ModifierID) WHERE IssueID = '1'
+    VALUES ('1')
+
+GET api/omaha-system/problem/1/signs - Gets the signs/symptoms associated with Problem with ID 1
+Returns: Signs JSON list (based on table 'sign')
+Errors:
+    Problem does not exist
+    User is not authorized
+This would run query:
+    SELECT Signs WHERE ProblemID = '1'
+
+PUT api/patient/1/issue/1/signs - Enters the Sign for Patient 1 Issue 1
+Expects: Signs JSON single object (based on table 'sign')
+Errors:
+    Patient does not exist
+    Issue does not exist
+This would run query:
+    INSERT INTO Issue (SignID) WHERE IssueID = '1'
+    VALUES ('1')
